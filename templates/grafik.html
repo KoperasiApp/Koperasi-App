@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>📊 Grafik Penjualan</h1>
+
+<div class="card">
+<canvas id="chart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+const labels = JSON.parse('{{ labels | tojson | safe }}' || '[]');
+const values = JSON.parse('{{ values | tojson | safe }}' || '[]');
+</script>
+<script>
+new Chart(document.getElementById('chart'), {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Total Penjualan',
+            data: values,
+            borderColor: '#3b82f6',
+            backgroundColor: 'rgba(59,130,246,0.2)',
+            tension: 0.3,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                labels: { color: '#fff' }
+            }
+        },
+        scales: {
+            x: {
+                ticks: { color: '#fff' }
+            },
+            y: {
+                ticks: { color: '#fff' }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

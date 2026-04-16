@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>KoperasiApp</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI', sans-serif;
+}
+
+body{
+display:flex;
+background:#0b1220;
+color:#e5e7eb;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:250px;
+height:100vh;
+background:#0f172a;
+padding:20px;
+position:fixed;
+left:0;
+top:0;
+border-right:1px solid #1e293b;
+}
+
+.sidebar h2{
+color:#38bdf8;
+margin-bottom:20px;
+}
+
+.sidebar a{
+display:block;
+padding:12px;
+margin-bottom:8px;
+color:#cbd5e1;
+text-decoration:none;
+border-radius:10px;
+transition:0.2s;
+}
+
+.sidebar a:hover{
+background:#1e293b;
+transform:translateX(5px);
+}
+
+/* CONTENT */
+.content{
+margin-left:250px;
+padding:25px;
+width:100%;
+}
+
+/* CARD GLOBAL */
+.card{
+background:#111827;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+border:1px solid #1f2937;
+}
+
+/* BUTTON */
+button{
+background:linear-gradient(90deg,#3b82f6,#2563eb);
+color:white;
+padding:10px 15px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+transition:0.2s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* INPUT */
+input,select{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:10px;
+border:1px solid #334155;
+background:#0b1220;
+color:white;
+outline:none;
+}
+
+input:focus{
+border-color:#3b82f6;
+}
+/* MOBILE */
+@media(max-width:768px){
+.sidebar{
+position:relative;
+width:100%;
+height:auto;
+}
+.content{
+margin-left:0;
+}
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+<h2>🏪 KoperasiApp</h2>
+
+<a href="/">📊 Dashboard</a>
+<a href="/kasir">🧾 Kasir</a>
+
+{% if session.get('role') == 'admin' %}
+<a href="/profit">💰 Profit</a>
+<a href="/laporan/harian">📅 Laporan Harian</a>
+<a href="/laporan/bulanan">📆 Laporan Bulanan</a>
+<a href="/dashboard/grafik">📊 Grafik Penjualan</a>
+{% endif %}
+
+<a href="/logout">🚪 Logout</a>
+</div>
+
+<div class="content">
+{% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

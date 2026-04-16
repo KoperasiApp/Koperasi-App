@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 style="margin-bottom:15px;">📊 Dashboard</h1>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
+
+<div class="card">
+<h3>📦 Produk</h3>
+<p>{{ produk|length }}</p>
+</div>
+
+<div class="card">
+<h3>👤 User</h3>
+<p>{{ session['user'] }}</p>
+</div>
+
+<div class="card">
+<h3>🔐 Role</h3>
+<p>{{ session['role'] }}</p>
+</div>
+
+</div>
+
+<br>
+
+<h2>📦 Daftar Produk</h2>
+
+{% if session['role'] == 'admin' %}
+<div class="card">
+<h3>➕ Tambah Produk</h3>
+<form method="POST" action="/add">
+    <input name="nama" placeholder="Nama Produk" required>
+    <input name="beli" type="number" placeholder="Beli" required>
+    <input name="jual" type="number" placeholder="Jual" required>
+    <input name="stok" type="number" placeholder="Stok" required>
+    <input name="expired" type="" placeholder="expired" required>
+
+    <button type="submit">Tambah</button>
+</form>
+</div>
+{% endif %}
+
+{% for p in produk %}
+<div class="card">
+<b>{{p['nama']}}</b><br>
+💰 Beli: {{p['beli']}} | Jual: {{p['jual']}} | 📦 Stok: {{p['stok']}}<br>
+
+{% if p['expired'] %}
+    {% if p['expired'] < "2100-01-01" %}
+        🗓 Expired: {{p['expired']}}
+    {% endif %}
+{% else %}
+🗓 Expired: -
+{% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}

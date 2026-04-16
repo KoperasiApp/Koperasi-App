@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>🧾 Kasir</h1>
+
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:15px;">
+
+<!-- PRODUK -->
+<div>
+{% for p in produk %}
+<div class="card">
+<b>{{p['nama']}}</b><br>
+
+💰 Rp{{p['jual']}} | 📦 {{p['stok']}}<br>
+
+{% if p['expired'] %}
+🗓 {{p['expired']}}<br>
+{% endif %}
+
+<br>
+
+{% if p['stok'] > 0 %}
+<a href="/add_cart/{{p['id']}}">
+<button>Tambah</button>
+</a>
+{% else %}
+<button disabled style="background:#374151;">Habis</button>
+{% endif %}
+
+</div>
+{% endfor %}
+</div>
+
+<!-- CART -->
+<div class="card">
+<h3>🛒 Keranjang</h3>
+
+{% set total = namespace(value=0) %}
+
+{% for c in cart %}
+<div style="margin-bottom:10px;">
+<b>{{c['nama']}}</b><br>
+
+Qty: {{c['qty']}} <br>
+
+<a href="/add_cart/{{c['id']}}">
+<button style="padding:5px 10px;">+</button>
+</a>
+
+<a href="/remove_cart/{{c['id']}}">
+<button style="padding:5px 10px;background:#ef4444;">-</button>
+</a>
+
+<br>
+
+Rp {{c['jual'] * c['qty']}}
+
+</div>
+
+<hr>
+
+{% set total.value = total.value + (c['jual'] * c['qty']) %}
+{% endfor %}
+
+<h3>Total: Rp {{total.value}}</h3>
+
+<br>
+
+<a href="/checkout">
+<button style="width:100%;">Checkout</button>
+</a>
+
+</div>
+
+</div>
+
+{% endblock %}
