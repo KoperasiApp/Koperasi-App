@@ -1,26 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>🧾 Struk Pembelian</h1>
+<h1>Struk</h1>
 
 <div class="card">
 
 {% for p in data %}
-<p>
-✔ {{p['nama']}} (x{{p['qty']}}) - Rp{{p['jual'] * p['qty']}}
-</p>
+<p>{{p['nama']}} x{{p['qty']}} {{p['satuan']}} = {{p['jual'] * p['qty']}}</p>
 {% endfor %}
 
-<hr>
-
-<h2>💰 Total: Rp{{total}}</h2>
-<h2>📈 Profit: Rp{{profit}}</h2>
-
-<br>
-
-<a href="/kasir">
-<button>Kembali</button>
-</a>
+<h2>Total: {{total}}</h2>
+<h3>Profit: {{profit}}</h3>
 
 </div>
 

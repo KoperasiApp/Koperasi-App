@@ -4,22 +4,17 @@
 <title>KoperasiApp</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI', sans-serif;
-}
-
 body{
-display:flex;
+margin:0;
+font-family:Arial;
 background:#0b1220;
 color:#e5e7eb;
+display:flex;
 }
 
 /* SIDEBAR */
 .sidebar{
-width:250px;
+width:210px;
 height:100vh;
 background:#0f172a;
 padding:20px;
@@ -31,16 +26,16 @@ border-right:1px solid #1e293b;
 
 .sidebar h2{
 color:#38bdf8;
-margin-bottom:20px;
 }
 
 .sidebar a{
 display:block;
 padding:12px;
-margin-bottom:8px;
-color:#cbd5e1;
-text-decoration:none;
+margin:8px 0;
 border-radius:10px;
+text-decoration:none;
+color:#cbd5e1;
+background:#111827;
 transition:0.2s;
 }
 
@@ -49,62 +44,97 @@ background:#1e293b;
 transform:translateX(5px);
 }
 
-/* CONTENT */
+/* CONTENT FIX (INI PENTING BIAR TIDAK KELEBIHAN KIRI) */
 .content{
-margin-left:250px;
+margin-left:260px;
 padding:25px;
-width:100%;
+width:calc(100% - 260px);
+box-sizing:border-box;
 }
 
-/* CARD GLOBAL */
+/* CARD */
 .card{
 background:#111827;
-padding:15px;
+padding:18px;
 border-radius:15px;
 margin-bottom:15px;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
-border:1px solid #1f2937;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
+transition:0.3s;
 }
 
-/* BUTTON */
-button{
-background:linear-gradient(90deg,#3b82f6,#2563eb);
-color:white;
-padding:10px 15px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-transition:0.2s;
-}
-
-button:hover{
-transform:scale(1.05);
+.card:hover{
+transform:translateY(-3px);
 }
 
 /* INPUT */
 input,select{
 width:100%;
-padding:10px;
-margin:5px 0;
+padding:12px;
+margin:6px 0;
 border-radius:10px;
-border:1px solid #334155;
+border:none;
 background:#0b1220;
 color:white;
 outline:none;
 }
 
-input:focus{
-border-color:#3b82f6;
+/* BUTTON */
+button{
+padding:10px 14px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#3b82f6;
+color:white;
+transition:0.2s;
 }
-/* MOBILE */
-@media(max-width:768px){
+
+button:hover{
+transform:scale(1.05);
+opacity:0.9;
+}
+
+/* TABLE */
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #1f2937;
+text-align:center;
+}
+
+th{
+color:#38bdf8;
+}
+
+/* STOK WARNING */
+.low{
+color:#ef4444;
+font-weight:bold;
+}
+
+/* KASIR LAYOUT 2 KOLOM */
+.kasir-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+@media(max-width:900px){
+.kasir-grid{
+grid-template-columns:1fr;
+}
+.content{
+margin-left:0;
+width:100%;
+}
 .sidebar{
 position:relative;
 width:100%;
 height:auto;
-}
-.content{
-margin-left:0;
 }
 }
 </style>
@@ -115,18 +145,8 @@ margin-left:0;
 
 <div class="sidebar">
 <h2>🏪 KoperasiApp</h2>
-
 <a href="/">📊 Dashboard</a>
 <a href="/kasir">🧾 Kasir</a>
-
-{% if session.get('role') == 'admin' %}
-<a href="/profit">💰 Profit</a>
-<a href="/laporan/harian">📅 Laporan Harian</a>
-<a href="/laporan/bulanan">📆 Laporan Bulanan</a>
-<a href="/dashboard/grafik">📊 Grafik Penjualan</a>
-{% endif %}
-
-<a href="/logout">🚪 Logout</a>
 </div>
 
 <div class="content">

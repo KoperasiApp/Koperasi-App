@@ -1,59 +1,79 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 style="margin-bottom:15px;">📊 Dashboard</h1>
-
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
+<h1>📊 Dashboard Produk</h1>
 
 <div class="card">
-<h3>📦 Produk</h3>
-<p>{{ produk|length }}</p>
+<h3>📦 Total Produk: {{produk|length}}</h3>
 </div>
 
-<div class="card">
-<h3>👤 User</h3>
-<p>{{ session['user'] }}</p>
-</div>
-
-<div class="card">
-<h3>🔐 Role</h3>
-<p>{{ session['role'] }}</p>
-</div>
-
-</div>
-
-<br>
-
-<h2>📦 Daftar Produk</h2>
-
-{% if session['role'] == 'admin' %}
 <div class="card">
 <h3>➕ Tambah Produk</h3>
 <form method="POST" action="/add">
-    <input name="nama" placeholder="Nama Produk" required>
-    <input name="beli" type="number" placeholder="Beli" required>
-    <input name="jual" type="number" placeholder="Jual" required>
-    <input name="stok" type="number" placeholder="Stok" required>
-    <input name="expired" type="" placeholder="expired" required>
 
-    <button type="submit">Tambah</button>
+<input name="nama" placeholder="Nama">
+<input name="beli" type="number" placeholder="Beli">
+<input name="jual" type="number" placeholder="Jual">
+<input name="stok" type="number" placeholder="Stok">
+<input name="expired" placeholder="YYYY-MM-DD">
+
+<select name="satuan">
+<option>pcs</option>
+<option>kg</option>
+<option>liter</option>
+<option>box</option>
+</select>
+
+<button>Tambah</button>
+
 </form>
 </div>
-{% endif %}
+
+<div class="card">
+<table>
+<tr>
+<th>Nama</th>
+<th>Harga</th>
+<th>Stok</th>
+<th>Satuan</th>
+<th>Expired</th>
+<th>Aksi</th>
+</tr>
 
 {% for p in produk %}
-<div class="card">
-<b>{{p['nama']}}</b><br>
-💰 Beli: {{p['beli']}} | Jual: {{p['jual']}} | 📦 Stok: {{p['stok']}}<br>
+<tr>
+<td>{{p['nama']}}</td>
+<td>{{p['jual']}}</td>
 
-{% if p['expired'] %}
-    {% if p['expired'] < "2100-01-01" %}
-        🗓 Expired: {{p['expired']}}
-    {% endif %}
+<td>
+{% if p['stok'] <= 3 %}
+<span class="low">{{p['stok']}} ⚠</span>
 {% else %}
-🗓 Expired: -
+{{p['stok']}}
 {% endif %}
-</div>
+</td>
+
+<td>{{p['satuan']}}</td>
+<td>{{p['expired'] or '-'}}</td>
+
+<td>
+<a href="/tambah_stok/{{p['id']}}">
+<button style="background:#22c55e;">+</button>
+</a>
+
+<a href="/edit/{{p['id']}}">
+<button style="background:#f59e0b;">Edit</button>
+</a>
+
+<a href="/hapus_produk/{{p['id']}}">
+<button style="background:#ef4444;">Hapus</button>
+</a>
+</td>
+
+</tr>
 {% endfor %}
+
+</table>
+</div>
 
 {% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Edit Produk</h1>
+
+<div class="card">
+<form method="POST">
+
+<input name="nama" value="{{p['nama']}}">
+<input name="beli" type="number" value="{{p['beli']}}">
+<input name="jual" type="number" value="{{p['jual']}}">
+<input name="stok" type="number" value="{{p['stok']}}">
+<input name="expired" value="{{p['expired']}}">
+
+<select name="satuan">
+<option {% if p['satuan']=='pcs' %}selected{% endif %}>pcs</option>
+<option {% if p['satuan']=='kg' %}selected{% endif %}>kg</option>
+<option {% if p['satuan']=='liter' %}selected{% endif %}>liter</option>
+<option {% if p['satuan']=='box' %}selected{% endif %}>box</option>
+</select>
+
+<button>Simpan</button>
+
+</form>
+</div>
+
+{% endblock %}
